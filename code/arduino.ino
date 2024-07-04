@@ -1,11 +1,11 @@
 unsigned long start_mls = 0;
-int timeout = 100;
+int timeout = 100; //maximum time the arduino will wait without getting confirmation from the micro:bit in ms, change if needed
 bool timed_out = false;
 
 void setup() {
-  pinMode(A0, OUTPUT);
-  pinMode(A1, OUTPUT);
-  pinMode(A2, INPUT);
+  pinMode(/*PIN CONNECTED TO MICRO:BIT'S P0*/, OUTPUT);
+  pinMode(/*PIN CONNECTED TO MICRO:BIT'S P1*/, OUTPUT);
+  pinMode(/*PIN CONNECTED TO MICRO_BIT'S P2*/, INPUT);
   Serial.begin(9600);
 }
 
@@ -14,9 +14,9 @@ void loop() {}
 void ledctrl(String led) {
   if (led.length() >= 25) {
     timed_out = false;
-    digitalWrite(A0, HIGH);
+    digitalWrite(/*PIN CONNECTED TO MICRO:BIT'S P0*/, HIGH);
     start_mls = millis();
-    while (digitalRead(A2) == LOW) {
+    while (digitalRead(/*PIN CONNECTED TO MICRO_BIT'S P2*/) == LOW) {
       if (timed_out) {
         break;
       }
@@ -24,8 +24,8 @@ void ledctrl(String led) {
         timed_out = true;
       }
     }
-    digitalWrite(A0, LOW);
-    while (digitalRead(A2) == HIGH) {
+    digitalWrite(/*PIN CONNECTED TO MICRO:BIT'S P0*/, LOW);
+    while (digitalRead(/*PIN CONNECTED TO MICRO_BIT'S P2*/) == HIGH) {
       if (timed_out) {
         break;
       }
@@ -35,9 +35,9 @@ void ledctrl(String led) {
     };
     for (int i = 0; i < 25; i++) {
       if (led.charAt(i) != '0') {
-        digitalWrite(A1, HIGH);
-        digitalWrite(A0, HIGH);
-        while (digitalRead(A2) == LOW) {
+        digitalWrite(/*PIN CONNECTED TO MICRO:BIT'S P1*/, HIGH);
+        digitalWrite(/*PIN CONNECTED TO MICRO:BIT'S P0*/, HIGH);
+        while (digitalRead(/*PIN CONNECTED TO MICRO_BIT'S P2*/) == LOW) {
           if (timed_out) {
             break;
           }
@@ -45,9 +45,9 @@ void ledctrl(String led) {
             timed_out = true;
           }
         }
-        digitalWrite(A0, LOW);
-        digitalWrite(A1, LOW);
-        while (digitalRead(A2) == HIGH) {
+        digitalWrite(/*PIN CONNECTED TO MICRO:BIT'S P0*/, LOW);
+        digitalWrite(/*PIN CONNECTED TO MICRO:BIT'S P1*/, LOW);
+        while (digitalRead(/*PIN CONNECTED TO MICRO_BIT'S P2*/) == HIGH) {
           if (timed_out) {
             break;
           }
@@ -56,8 +56,8 @@ void ledctrl(String led) {
           }
         }
       } else {
-        digitalWrite(A0, HIGH);
-        while (digitalRead(A2) == LOW) {
+        digitalWrite(/*PIN CONNECTED TO MICRO:BIT'S P0*/, HIGH);
+        while (digitalRead(/*PIN CONNECTED TO MICRO_BIT'S P2*/) == LOW) {
           if (timed_out) {
             break;
           }
@@ -65,8 +65,8 @@ void ledctrl(String led) {
             timed_out = true;
           }
         }
-        digitalWrite(A0, LOW);
-        while (digitalRead(A2) == HIGH) {
+        digitalWrite(/*PIN CONNECTED TO MICRO:BIT'S P0*/, LOW);
+        while (digitalRead(/*PIN CONNECTED TO MICRO_BIT'S P2*/) == HIGH) {
           if (timed_out) {
             break;
           }
@@ -79,7 +79,7 @@ void ledctrl(String led) {
   } else {
     timed_out = false;
   }
-  if (digitalRead(A2) == HIGH || timed_out) {
+  if (digitalRead(/*PIN CONNECTED TO MICRO_BIT'S P2*/) == HIGH || timed_out) {
     ledctrl(led);
   }
 }
